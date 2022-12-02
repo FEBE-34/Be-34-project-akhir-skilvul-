@@ -89,8 +89,7 @@ async function daftarprogram(req,res){
     const daftarprogram = await models.pilihprogram.create({ 
       id_program: tampung.id,
       id_datapenyandang: datapenyandang.id,
-      status: "daftar"
-
+      status: "Daftar"
     })
       res.status(200).json({
       message: 'Success create data',
