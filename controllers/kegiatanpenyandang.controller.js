@@ -10,13 +10,16 @@ async function kegiatanpenyandang(req,res){
     if (verified.posisi === "penyandang disabilitas no-lsm" || verified.posisi === "penyandang disabilitas lsm") {
        
         const kegiatan = await models.pilihprogram.findAll({ 
-          include:[{
+          include:
+          [
+            {
+              model: models.DataPenyandang
+            },
+            {
               model: models.Program,
               include: [models.DataMitra]
               },
-              {
-                model: models.DataPenyandang
-              }
+          
           ],
           where:{
           id_datapenyandang:verified.id_user,
