@@ -11,7 +11,7 @@ async function getallpenyandang(req, res) {
   if (verified.posisi === "penyandang disabilitas no-lsm" || verified.posisi === "penyandang disabilitas lsm") {
     const id = verified.id_user
    const penyandang = await models.DataPenyandang.findOne({where:{id_user:id}})
-    console.log(penyandang.id)
+    // console.log(penyandang.id)
     if (penyandang) {
       const kontakpribadi = await models.KontakPribadi.findAll({
         where: {
