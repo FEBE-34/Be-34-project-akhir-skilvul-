@@ -8,14 +8,14 @@ async function kegiatanpenyandang(req,res){
     const verified = jwt.verify(token, 'secret') 
    
     if (verified.posisi === "penyandang disabilitas no-lsm" || verified.posisi === "penyandang disabilitas lsm") {
-        const id  = verified.id_user
-      const datapenyandang =  await models.DataPenyandang.findOne({where:{id_user: id }})
+      //   const id  = verified.id_user
+      // const datapenyandang =  await models.DataPenyandang.findOne({where:{id_user: id }})
         const kegiatan = await models.pilihprogram.findAll({ 
           include:
           [
-            // {
-            //   model: models.DataPenyandang
-            // },
+            {
+              model: models.DataPenyandang
+            },
             {
               model: models.Program,
               include: [models.DataMitra]
@@ -29,7 +29,7 @@ async function kegiatanpenyandang(req,res){
           })
           res.status(200).json({
             message: 'Success show data',
-            datapenyandang : datapenyandang,
+            
             kegiatan: kegiatan
           })
     }
