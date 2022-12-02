@@ -8,11 +8,13 @@ async function kegiatanpenyandang(req,res){
     const verified = jwt.verify(token, 'secret') 
    
     if (verified.posisi === "penyandang disabilitas no-lsm" || verified.posisi === "penyandang disabilitas lsm") {
-      //   const id  = verified.id_user
-      // const datapenyandang =  await models.DataPenyandang.findOne({where:{id_user: id }})
+        const id  = verified.id_user
+      const datapenyandang =  await models.DataPenyandang.findOne({where:{id_user: id }})
         const kegiatan = await models.pilihprogram.findAll({ 
           include:
           [
+            // models.DataPenyandang,
+            // models.Program
             {
               model: models.DataPenyandang
             },
@@ -23,13 +25,12 @@ async function kegiatanpenyandang(req,res){
           
           ],
           where:{
-          id_datapenyandang:verified.id_user,
+          id_datapenyandang:datapenyandang.id,
           status:"daftar"
         }
           })
           res.status(200).json({
             message: 'Success show data',
-            
             kegiatan: kegiatan
           })
     }
@@ -39,9 +40,9 @@ async function kegiatanaktifpenyandang(req,res){
   const token = await auth.split(' ')[1]
 
   const verified = jwt.verify(token, 'secret') 
- 
   if (verified.posisi === "penyandang disabilitas no-lsm" || verified.posisi === "penyandang disabilitas lsm") {
-     
+    const id  = verified.id_user
+    const datapenyandang =  await models.DataPenyandang.findOne({where:{id_user: id }})
       const kegiatan = await models.pilihprogram.findAll({ 
         include:[{
             model: models.Program,
@@ -52,7 +53,7 @@ async function kegiatanaktifpenyandang(req,res){
             }
         ],
         where:{
-          id_datapenyandang:verified.id_user,
+          id_datapenyandang:datapenyandang.id,
           status:"diterima"
         }
       })

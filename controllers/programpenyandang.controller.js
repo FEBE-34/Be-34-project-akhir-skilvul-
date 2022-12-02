@@ -83,11 +83,12 @@ async function daftarprogram(req,res){
  
   if (verified.posisi === "penyandang disabilitas no-lsm" || verified.posisi === "penyandang disabilitas lsm") {
     const id = req.params.id 
+    const verifiedid = verified.id_user
     const tampung =  await models.Program.findByPk(id)
-    // const temp =  await models.DataPenyandang.findByPk(verified.id_user)
+    const datapenyandang =  await models.DataPenyandang.findOne({where:{id_user: verifiedid }})
     const daftarprogram = await models.pilihprogram.create({ 
       id_program: tampung.id,
-      id_datapenyandang: verified.id_user,
+      id_datapenyandang: datapenyandang.id,
       status: "daftar"
 
     })
